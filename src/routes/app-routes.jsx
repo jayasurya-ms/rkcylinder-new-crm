@@ -6,6 +6,7 @@ import UserViewCylinder from "@/app/user-view-cylinder/user-view-cylinder";
 import Maintenance from "@/components/common/maintenance";
 import ErrorBoundary from "@/components/error-boundry/error-boundry";
 import ForgotPassword from "@/components/forgot-password/forgot-password";
+import SignUpAuth from "@/components/auth/signup-auth";
 import LoadingBar from "@/components/loader/loading-bar";
 import { Suspense } from "react";
 import { Route, Routes } from "react-router-dom";
@@ -23,6 +24,14 @@ function AppRoutes() {
             element={
               <Suspense fallback={<LoadingBar />}>
                 <ForgotPassword />
+              </Suspense>
+            }
+          />
+          <Route
+            path="/signup"
+            element={
+              <Suspense fallback={<LoadingBar />}>
+                <SignUpAuth />
               </Suspense>
             }
           />

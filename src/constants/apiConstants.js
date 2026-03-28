@@ -3,7 +3,7 @@ export const LOGIN = {
   forgotpassword: "web-send-password",
 };
 export const PANEL_CHECK = {
-  getPanelStatus: "https://dfcgroup.in/rkapi/public/api/web-check-status",
+  getPanelStatus: "web-check-status",
 };
 
 export const DASHBOARD = {
@@ -136,7 +136,7 @@ export const PAGE_TWO_API = {
   dropdown: "/page-two",
 };
 export const CHANGE_PASSWORD_API = {
-  create: "/panel-change-password",
+  create: "web-change-password",
 };
 export const COUNTRY_API = {
   list: "/country",
