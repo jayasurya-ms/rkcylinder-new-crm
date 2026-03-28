@@ -31,7 +31,6 @@ const ManufacturerList = () => {
     { header: "Mobile", accessorKey: "manufacturer_mobile" },
     { header: "Email", accessorKey: "manufacturer_email" },
     { header: "State", accessorKey: "manufacturer_state" },
-    { header: "Address", accessorKey: "manufacturer_address" },
     {
       header: "Status",
       accessorKey: "manufacturer_status",
@@ -75,8 +74,9 @@ const ManufacturerList = () => {
     <>
       {isLoading && <LoadingBar />}
       <DataTable
-        data={data?.data || []}
+        data={data?.manufacturer || []}
         columns={columns}
+        loading={isLoading}
         pageSize={10}
         searchPlaceholder="Search manufacturer..."
         addButton={{

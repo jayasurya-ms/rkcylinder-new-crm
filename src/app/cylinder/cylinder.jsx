@@ -4,7 +4,7 @@ import LoadingBar from "@/components/loader/loading-bar";
 import { Button } from "@/components/ui/button";
 import { CYLINDER_API } from "@/constants/apiConstants";
 import { useGetApiMutation } from "@/hooks/useGetApiMutation";
-import { Edit, List } from "lucide-react";
+import { Edit, List, Eye } from "lucide-react";
 import { useState } from "react";
 import CylinderForm from "./cylinder-form";
 import CylinderSubList from "./cylinder-sub-list";
@@ -29,22 +29,34 @@ const CylinderList = () => {
   };
 
   const columns = [
-    { header: "Batch No", accessorKey: "batch_no" },
-    { header: "Year", accessorKey: "cylinder_year" },
-    { header: "Date", accessorKey: "cylinder_date" },
-    { header: "Count", accessorKey: "cylinder_count" },
+    {
+      header: "SL No",
+      id: "slNo",
+      cell: ({ row }) => row.index + 1,
+    },
     { header: "Vendor", accessorKey: "vendor_name" },
+    { header: "Cyl Count", accessorKey: "cylinder_count" },
+    { header: "Status", accessorKey: "cylinder_status" },
+    { header: "R K Batch No", accessorKey: "cylinder_batch_nos" },
+    {
+      header: "Date",
+      accessorKey: "cylinder_date",
+      cell: ({ row }) => {
+        const date = row.original.cylinder_date;
+        return date ? new Date(date).toLocaleDateString("en-GB").replace(/\//g, "-") : "";
+      },
+    },
     {
       header: "Action",
       cell: ({ row }) => (
         <div className="flex gap-2">
           <Button
             size="icon"
-            variant="outline"
+            variant="ghost"
             onClick={() => handleViewSubItems(row.original.id)}
-            title="View Serial Numbers"
+            title="View Cylinder Info"
           >
-            <List className="h-4 w-4" />
+            <Eye className="h-5 w-5 text-green-600" />
           </Button>
         </div>
       ),
@@ -68,8 +80,9 @@ const CylinderList = () => {
     <>
       {isLoading && <LoadingBar />}
       <DataTable
-        data={data?.data || []}
+        data={data?.cylinder || []}
         columns={columns}
+        loading={isLoading}
         pageSize={10}
         searchPlaceholder="Search batch..."
         addButton={{
@@ -77,11 +90,13 @@ const CylinderList = () => {
           label: "Create Batch",
         }}
       />
-      <CylinderForm
-        isOpen={isDialogOpen}
-        onClose={() => setIsDialogOpen(false)}
-        cylinderId={selectedId}
-      />
+      {isDialogOpen && (
+        <CylinderForm
+          isOpen={isDialogOpen}
+          onClose={() => setIsDialogOpen(false)}
+          cylinderId={selectedId}
+        />
+      )}
     </>
   );
 };

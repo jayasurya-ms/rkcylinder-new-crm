@@ -47,14 +47,16 @@ const ManufacturerForm = ({ isOpen, onClose, manufacturerId }) => {
           url: MANUFACTURER_API.byId(manufacturerId),
         });
 
-        if (res?.data) {
+        console.log("Manufacturer Detail Response:", res);
+        const manufacturerData = res?.manufacturer || res?.data;
+        if (manufacturerData) {
           setData({
-            manufacturer_name: res.data.manufacturer_name || "",
-            manufacturer_mobile: res.data.manufacturer_mobile || "",
-            manufacturer_email: res.data.manufacturer_email || "",
-            manufacturer_state: res.data.manufacturer_state || "",
-            manufacturer_address: res.data.manufacturer_address || "",
-            manufacturer_status: res.data.manufacturer_status || "Active",
+            manufacturer_name: manufacturerData.manufacturer_name || "",
+            manufacturer_mobile: manufacturerData.manufacturer_mobile || "",
+            manufacturer_email: manufacturerData.manufacturer_email || "",
+            manufacturer_state: manufacturerData.manufacturer_state || "",
+            manufacturer_address: manufacturerData.manufacturer_address || "",
+            manufacturer_status: manufacturerData.manufacturer_status || "Active",
           });
         }
       } catch (err) {

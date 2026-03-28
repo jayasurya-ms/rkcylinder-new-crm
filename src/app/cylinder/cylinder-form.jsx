@@ -8,7 +8,13 @@ import {
   DialogTitle,
 } from "@/components/ui/dialog";
 import { Input } from "@/components/ui/input";
-import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
+import {
+  Select,
+  SelectContent,
+  SelectItem,
+  SelectTrigger,
+  SelectValue,
+} from "@/components/ui/select";
 import { CYLINDER_API, VENDOR_API } from "@/constants/apiConstants";
 import { useApiMutation } from "@/hooks/use-mutation";
 import { useGetApiMutation } from "@/hooks/useGetApiMutation";
@@ -18,10 +24,10 @@ import { toast } from "sonner";
 
 const initialState = {
   cylinder_year: new Date().getFullYear().toString(),
-  cylinder_date: new Date().toISOString().split('T')[0],
-  vendor_id: "",
+  cylinder_date: new Date().toISOString().split("T")[0],
+  cylinder_vendor_id: "",
   cylinder_count: "",
-  batch_no: "",
+  cylinder_batch_nos: "",
 };
 
 const CylinderForm = ({ isOpen, onClose }) => {
@@ -32,8 +38,9 @@ const CylinderForm = ({ isOpen, onClose }) => {
   const queryClient = useQueryClient();
 
   const { data: vendorData } = useGetApiMutation({
-    url: VENDOR_API.list,
+    url: VENDOR_API.dropdown,
     queryKey: ["vendor-dropdown"],
+    options: { enabled: isOpen },
   });
 
   useEffect(() => {
@@ -48,11 +55,17 @@ const CylinderForm = ({ isOpen, onClose }) => {
     try {
       const res = await fetchBatchNo({
         url: CYLINDER_API.batchNo,
-        method: "get"
+        method: "get",
       });
-      if (res?.batch_no) {
-        setData(prev => ({ ...prev, batch_no: res.batch_no }));
-      }
+      console.log("Batch No Response:", res);
+
+      const latestId = res?.latestid?.cylinder_batch_nos || res?.latestid;
+      const nextId =
+        isNaN(latestId) || latestId === null
+          ? "1001"
+          : (Number(latestId) + 1).toString();
+
+      setData((prev) => ({ ...prev, cylinder_batch_nos: nextId }));
     } catch (err) {
       toast.error("Failed to generate batch number");
     }
@@ -62,9 +75,10 @@ const CylinderForm = ({ isOpen, onClose }) => {
     const newErrors = {};
     if (!data.cylinder_year) newErrors.cylinder_year = "Required";
     if (!data.cylinder_date) newErrors.cylinder_date = "Required";
-    if (!data.vendor_id) newErrors.vendor_id = "Required";
-    if (!data.cylinder_count || isNaN(data.cylinder_count)) newErrors.cylinder_count = "Invalid count";
-    if (!data.batch_no) newErrors.batch_no = "Required";
+    if (!data.cylinder_vendor_id) newErrors.cylinder_vendor_id = "Required";
+    if (!data.cylinder_count || isNaN(data.cylinder_count))
+      newErrors.cylinder_count = "Invalid count";
+    if (!data.cylinder_batch_nos) newErrors.cylinder_batch_nos = "Required";
 
     setErrors(newErrors);
     return Object.keys(newErrors).length === 0;
@@ -76,9 +90,9 @@ const CylinderForm = ({ isOpen, onClose }) => {
     const formData = new FormData();
     formData.append("cylinder_year", data.cylinder_year);
     formData.append("cylinder_date", data.cylinder_date);
-    formData.append("vendor_id", data.vendor_id);
+    formData.append("cylinder_vendor_id", data.cylinder_vendor_id);
     formData.append("cylinder_count", data.cylinder_count);
-    formData.append("batch_no", data.batch_no);
+    formData.append("cylinder_batch_nos", data.cylinder_batch_nos);
 
     try {
       const res = await submitCylinder({
@@ -113,7 +127,7 @@ const CylinderForm = ({ isOpen, onClose }) => {
             <div className="space-y-2">
               <label className="text-sm font-medium">Batch No *</label>
               <Input
-                value={data.batch_no}
+                value={data.cylinder_batch_nos}
                 readOnly
                 className="bg-muted"
               />
@@ -123,7 +137,9 @@ const CylinderForm = ({ isOpen, onClose }) => {
               <Input
                 type="date"
                 value={data.cylinder_date}
-                onChange={(e) => setData({ ...data, cylinder_date: e.target.value })}
+                onChange={(e) =>
+                  setData({ ...data, cylinder_date: e.target.value })
+                }
               />
             </div>
           </div>
@@ -134,7 +150,9 @@ const CylinderForm = ({ isOpen, onClose }) => {
               <Input
                 placeholder="Year"
                 value={data.cylinder_year}
-                onChange={(e) => setData({ ...data, cylinder_year: e.target.value })}
+                onChange={(e) =>
+                  setData({ ...data, cylinder_year: e.target.value })
+                }
               />
             </div>
             <div className="space-y-2">
@@ -143,36 +161,50 @@ const CylinderForm = ({ isOpen, onClose }) => {
                 placeholder="Count"
                 type="number"
                 value={data.cylinder_count}
-                onChange={(e) => setData({ ...data, cylinder_count: e.target.value })}
+                onChange={(e) =>
+                  setData({ ...data, cylinder_count: e.target.value })
+                }
               />
-              {errors.cylinder_count && <p className="text-xs text-red-500">{errors.cylinder_count}</p>}
+              {errors.cylinder_count && (
+                <p className="text-xs text-red-500">{errors.cylinder_count}</p>
+              )}
             </div>
           </div>
 
           <div className="space-y-2">
             <label className="text-sm font-medium">Vendor *</label>
             <Select
-              onValueChange={(value) => setData({ ...data, vendor_id: value })}
-              value={data.vendor_id}
+              onValueChange={(value) =>
+                setData({ ...data, cylinder_vendor_id: value })
+              }
+              value={data.cylinder_vendor_id}
             >
               <SelectTrigger>
                 <SelectValue placeholder="Select vendor" />
               </SelectTrigger>
               <SelectContent>
-                {vendorData?.data?.map((vendor) => (
+                {vendorData?.vendor?.map((vendor) => (
                   <SelectItem key={vendor.id} value={vendor.id.toString()}>
                     {vendor.vendor_name}
                   </SelectItem>
                 ))}
               </SelectContent>
             </Select>
-            {errors.vendor_id && <p className="text-xs text-red-500">{errors.vendor_id}</p>}
+            {errors.cylinder_vendor_id && (
+              <p className="text-xs text-red-500">
+                {errors.cylinder_vendor_id}
+              </p>
+            )}
           </div>
         </div>
 
         <DialogFooter>
-          <Button variant="outline" onClick={onClose}>Cancel</Button>
-          <Button onClick={handleSave} disabled={submitLoading}>Create Batch</Button>
+          <Button variant="outline" onClick={onClose}>
+            Cancel
+          </Button>
+          <Button onClick={handleSave} disabled={submitLoading}>
+            Create Batch
+          </Button>
         </DialogFooter>
       </DialogContent>
     </Dialog>

@@ -47,14 +47,16 @@ const VendorForm = ({ isOpen, onClose, vendorId }) => {
           url: VENDOR_API.byId(vendorId),
         });
 
-        if (res?.data) {
+        console.log("Vendor Detail Response:", res);
+        const vendorData = res?.vendor || res?.data;
+        if (vendorData) {
           setData({
-            vendor_name: res.data.vendor_name || "",
-            vendor_mobile: res.data.vendor_mobile || "",
-            vendor_email: res.data.vendor_email || "",
-            vendor_state: res.data.vendor_state || "",
-            vendor_address: res.data.vendor_address || "",
-            vendor_status: res.data.vendor_status || "Active",
+            vendor_name: vendorData.vendor_name || "",
+            vendor_mobile: vendorData.vendor_mobile || "",
+            vendor_email: vendorData.vendor_email || "",
+            vendor_state: vendorData.vendor_state || "",
+            vendor_address: vendorData.vendor_address || "",
+            vendor_status: vendorData.vendor_status || "Active",
           });
         }
       } catch (err) {

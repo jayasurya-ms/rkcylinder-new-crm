@@ -33,32 +33,52 @@ import { useSelector } from "react-redux";
 
 const NAVIGATION_CONFIG = {
   COMMON: {
-    MASTER: {
-      title: "Master",
-      url: "#",
-      icon: Settings,
-      items: [
-        {
-          title: "Manufacturer",
-          url: "/manufacturer",
-          icon: Factory,
-        },
-        {
-          title: "Vendor",
-          url: "/vendor",
-          icon: Truck,
-        },
-        {
-          title: "Cylinder",
-          url: "/cylinder",
-          icon: Boxes,
-        },
-      ],
+    Manufacturer: {
+      title: "Manufacturer",
+      url: "/manufacturer",
+      icon: Factory,
+    },
+    Vendor: {
+      title: "Vendor",
+      url: "/vendor",
+      icon: Truck,
+    },
+    Cylinder: {
+      title: "Cylinder",
+      url: "/cylinder",
+      icon: Boxes,
     },
     SETTINGS: {
       title: "Settings",
       url: "/settings",
       icon: Cog,
+    },
+    REPORTS: {
+      title: "Reports",
+      url: "#",
+      icon: BarChart3,
+      items: [
+        {
+          title: "Vendor Report",
+          url: "/report/vendor",
+          icon : FileDown,
+        },
+        {
+          title: "Manufacturer Report",
+          url: "/report/manufacturer",
+          icon : FileDown,
+        },
+        {
+          title: "General Report",
+          url: "/report/general",
+          icon : FileDown,
+        },
+        {
+          title: "Cylinder Details",
+          url: "/report/cylinder-details",
+          icon : FileDown,
+        },
+      ],
     },
   },
 };
@@ -66,7 +86,10 @@ const NAVIGATION_CONFIG = {
 const useNavigationData = (userType) => {
   return useMemo(() => {
     const navMain = [
-      NAVIGATION_CONFIG.COMMON.MASTER,
+      NAVIGATION_CONFIG.COMMON.Cylinder,
+      NAVIGATION_CONFIG.COMMON.Manufacturer,
+      NAVIGATION_CONFIG.COMMON.Vendor,
+      NAVIGATION_CONFIG.COMMON.REPORTS,
       NAVIGATION_CONFIG.COMMON.SETTINGS,
     ];
 

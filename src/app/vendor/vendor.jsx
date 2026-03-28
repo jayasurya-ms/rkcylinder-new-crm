@@ -31,7 +31,6 @@ const VendorList = () => {
     { header: "Mobile", accessorKey: "vendor_mobile" },
     { header: "Email", accessorKey: "vendor_email" },
     { header: "State", accessorKey: "vendor_state" },
-    { header: "Address", accessorKey: "vendor_address" },
     {
       header: "Status",
       accessorKey: "vendor_status",
@@ -75,8 +74,9 @@ const VendorList = () => {
     <>
       {isLoading && <LoadingBar />}
       <DataTable
-        data={data?.data || []}
+        data={data?.vendor || []}
         columns={columns}
+        loading={isLoading}
         pageSize={10}
         searchPlaceholder="Search vendor..."
         addButton={{
