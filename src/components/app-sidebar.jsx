@@ -17,6 +17,7 @@ import {
   BarChart3,
   FileDown,
   Cog,
+  Eye,
 } from "lucide-react";
 import { useMemo, useState } from "react";
 import { useSelector } from "react-redux";
@@ -37,6 +38,11 @@ const NAVIGATION_CONFIG = {
       title: "Cylinder",
       url: "/cylinder",
       icon: Boxes,
+    },
+    ViewCylinder: {
+      title: "View Cylinder",
+      url: "/view-cylinder",
+      icon: Eye,
     },
     SETTINGS: {
       title: "Settings",
@@ -59,13 +65,13 @@ const NAVIGATION_CONFIG = {
           icon: FileDown,
         },
         {
-          title: "General Report",
-          url: "/report/general",
+          title: "Cylinder Details",
+          url: "/report/cylinder-details",
           icon: FileDown,
         },
         {
-          title: "Cylinder Details",
-          url: "/report/cylinder-details",
+          title: "Report",
+          url: "/report/general",
           icon: FileDown,
         },
       ],
@@ -79,6 +85,7 @@ const useNavigationData = (userType) => {
       NAVIGATION_CONFIG.COMMON.Manufacturer,
       NAVIGATION_CONFIG.COMMON.Vendor,
       NAVIGATION_CONFIG.COMMON.Cylinder,
+      NAVIGATION_CONFIG.COMMON.ViewCylinder,
       NAVIGATION_CONFIG.COMMON.REPORTS,
       NAVIGATION_CONFIG.COMMON.SETTINGS,
     ];

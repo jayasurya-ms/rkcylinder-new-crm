@@ -58,8 +58,8 @@ export default function Page({ children }) {
   if (isStandardUser) {
     return (
       <div className="min-h-screen bg-background flex flex-col">
-        <main className="flex-1 p-4">
-          <div className="max-w-4xl mx-auto">
+        <main className="flex-1 p-4 w-full">
+          <div className="max-w-7xl mx-auto w-full">
             {children}
           </div>
         </main>

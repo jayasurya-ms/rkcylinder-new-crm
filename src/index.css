@@ -384,3 +384,63 @@
 svg:focus {
   outline: none;
 }
+
+@media print {
+  /* Hide sidebar and navigation elements */
+  nav, .sidebar, .app-sidebar, header, .no-print, button, .flex-wrap, form {
+    display: none !important;
+  }
+
+  /* Reset main container and remove spacing/margins */
+  main, .p-4, .space-y-6 {
+    margin: 0 !important;
+    padding: 0 !important;
+    width: 100% !important;
+    max-width: 100% !important;
+  }
+
+  /* Ensure text is black and background is white */
+  body, .bg-background, .text-foreground, .bg-white, .text-black {
+    background-color: white !important;
+    color: black !important;
+  }
+
+  /* Expand table to full width */
+  .DataTable, table {
+    width: 100% !important;
+    border-collapse: collapse !important;
+  }
+
+  /* Keep borders visible in print */
+  th, td {
+    border: 1px solid #e5e7eb !important;
+    color: black !important;
+  }
+
+  /* Remove rounding and shadows */
+  .rounded-lg, .border, .shadow {
+    border-radius: 0 !important;
+    box-shadow: none !important;
+    border: none !important;
+  }
+
+  /* Fix for dark mode backgrounds during print */
+  .dark {
+    --background: 0 0% 100%;
+    --foreground: 0 0% 0%;
+  }
+
+  /* Page break settings */
+  tr {
+    page-break-inside: avoid;
+    page-break-after: auto;
+  }
+
+  /* Display the report title clearly */
+  h2 {
+    display: block !important;
+    margin-bottom: 1rem !important;
+    font-size: 1.5rem !important;
+    text-align: center !important;
+  }
+}

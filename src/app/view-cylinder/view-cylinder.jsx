@@ -33,20 +33,25 @@ const ViewCylinder = () => {
         method: "get"
       });
 
-      if (res?.data) {
-        setResult(res.data);
+      const resultData = res?.cylinderSub?.[0] || res?.data;
+
+      if (resultData) {
+        setResult(resultData);
       } else {
         setResult(null);
         toast.error(`No cylinder found for this ${serialLabel}.`);
       }
     } catch (err) {
       toast.error("Failed to fetch cylinder details.");
+    } finally {
+      setBarcode("");
+      inputRef.current?.focus();
     }
   };
 
   return (
-    <div className="p-4 flex flex-col items-center space-y-6">
-      <div className="w-full max-w-2xl bg-white/5 p-6 rounded-2xl border border-white/10 shadow-xl">
+    <div className="p-4 flex flex-col items-center space-y-6 w-full">
+      <div className="w-full max-w-4xl bg-white/5 p-6 rounded-2xl border border-white/10 shadow-xl">
         <h2 className="text-xl font-bold mb-4">Search Cylinder Details</h2>
         <form onSubmit={handleSearch} className="flex gap-2">
             <div className="flex-1 relative">
@@ -60,7 +65,7 @@ const ViewCylinder = () => {
             </div>
             <Button type="submit" disabled={loading} className="gap-2">
                 <Search className="h-4 w-4" />
-                Search
+                Submit
             </Button>
         </form>
       </div>
@@ -68,7 +73,7 @@ const ViewCylinder = () => {
       {loading && <LoadingBar />}
 
       {result && (
-        <div className="w-full max-w-4xl animate-in fade-in slide-in-from-bottom-4 duration-500">
+        <div className="w-full max-w-7xl animate-in font-sans fade-in slide-in-from-bottom-4 duration-500">
            <CylinderDetails data={result} branchId={branchId} />
         </div>
       )}

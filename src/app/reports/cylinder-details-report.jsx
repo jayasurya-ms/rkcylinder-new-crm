@@ -4,11 +4,12 @@ import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@
 import { REPORT_API, VENDOR_API } from "@/constants/apiConstants";
 import { useGetApiMutation } from "@/hooks/useGetApiMutation";
 import { FileDown, Download } from "lucide-react";
-import { useState } from "react";
+import { useState, useRef } from "react";
 import { toast } from "sonner";
 import LoadingBar from "@/components/loader/loading-bar";
 import { useApiMutation } from "@/hooks/use-mutation";
 import DataTable from "@/components/common/data-table";
+import { useReactToPrint } from "react-to-print";
 
 const CylinderDetailsReport = () => {
     const [fromDate, setFromDate] = useState(new Date().toISOString().split('T')[0]);
@@ -16,6 +17,7 @@ const CylinderDetailsReport = () => {
     const [vendorId, setVendorId] = useState("all");
     const [barcode, setBarcode] = useState("");
     const [data, setData] = useState([]);
+    const reportRef = useRef(null);
 
     const { data: vendorData } = useGetApiMutation({
         url: VENDOR_API.list,
@@ -23,6 +25,11 @@ const CylinderDetailsReport = () => {
     });
 
     const { trigger: fetchReport, loading } = useApiMutation();
+
+    const handlePrint = useReactToPrint({
+        content: () => reportRef.current,
+        documentTitle: "cylinder-details-report",
+    });
 
     const handleFilter = async (e) => {
         e?.preventDefault();
@@ -87,9 +94,9 @@ const CylinderDetailsReport = () => {
         { header: "Manufacturer", accessorKey: "manufacturer_name" },
         { header: "Batch No", accessorKey: "cylinder_sub_batch_no" },
         { header: "Cylinder No", accessorKey: "cylinder_sub_company_no" },
-        { 
-            header: "Month/Year", 
-            cell: ({ row }) => `${row.original.cylinder_sub_manufacturer_month}/${row.original.cylinder_sub_manufacturer_year}` 
+        {
+            header: "Month/Year",
+            cell: ({ row }) => `${row.original.cylinder_sub_manufacturer_month}/${row.original.cylinder_sub_manufacturer_year}`
         },
         { header: "Tare Weight", accessorKey: "cylinder_sub_weight" },
     ];
@@ -98,10 +105,16 @@ const CylinderDetailsReport = () => {
         <div className="p-4 space-y-6">
             <div className="flex justify-between items-center">
                 <h2 className="text-2xl font-bold">Cylinder Details Report</h2>
-                <Button onClick={handleDownloadCSV} variant="default" className="gap-2">
-                    <Download className="h-4 w-4" />
-                    Download CSV
-                </Button>
+                <div className="flex gap-2">
+                    <Button onClick={handlePrint} disabled={data.length === 0} variant="outline" className="gap-2 no-print">
+                        <FileDown className="h-4 w-4" />
+                        PDF
+                    </Button>
+                    <Button onClick={handleDownloadCSV} variant="default" className="gap-2">
+                        <Download className="h-4 w-4" />
+                        CSV
+                    </Button>
+                </div>
             </div>
 
             <form onSubmit={handleFilter} className="grid grid-cols-1 md:grid-cols-4 gap-4 bg-white/5 p-4 rounded-xl border border-white/10 items-end">
@@ -129,23 +142,27 @@ const CylinderDetailsReport = () => {
                 </div>
                 <div className="space-y-1">
                     <label className="text-xs font-semibold uppercase text-muted-foreground">RK Serial No</label>
-                    <Input 
-                        placeholder="Search Serial No..." 
-                        value={barcode} 
-                        onChange={(e) => setBarcode(e.target.value)} 
-                        className="bg-white/5 border-white/10 h-10" 
+                    <Input
+                        placeholder="Search Serial No..."
+                        value={barcode}
+                        onChange={(e) => setBarcode(e.target.value)}
+                        className="bg-white/5 border-white/10 h-10"
                     />
                 </div>
                 <Button type="submit" disabled={loading} className="h-10">Show Report</Button>
             </form>
 
-            <DataTable 
-                data={data}
-                columns={columns}
-                loading={loading}
-                pageSize={20}
-                searchPlaceholder="Search in report..."
-            />
+            <div ref={reportRef} className="bg-white rounded-lg p-2 overflow-hidden text-black">
+                <h2 className="hidden print:block text-2xl font-bold text-center mb-4">Cylinder Details Report</h2>
+                <DataTable
+                    data={data}
+                    columns={columns}
+                    loading={loading}
+                    pageSize={20}
+                    hideSearch={true}
+                    hideColumn={true}
+                />
+            </div>
         </div>
     );
 };
