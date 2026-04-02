@@ -32,7 +32,7 @@ export const CYLINDER_API = {
   updateSub: (id) => `web-update-cylinder-new/${id}`,
   byId: (id) => `web-fetch-cylinder-by-id-new/${id}`,
   subById: (id) => `web-fetch-cylinder-by-id-new/${id}`,
-  detailsByBarcode: (barcode) => `web-fetch-cylinder-details-by-barcode/${barcode}`,
+  detailsByBarcode: (barcode) => `web-fetch-cylinder-by-scan/${barcode}`,
 };
 
 export const REPORT_API = {

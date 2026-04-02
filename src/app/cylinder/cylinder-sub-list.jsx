@@ -71,7 +71,7 @@ const CylinderSubList = ({ cylinderId, onBack }) => {
       ? [{ header: "R K Serial No", accessorKey: "cylinder_sub_barcode" }]
       : []),
 
-    { header: "R K Batch No", accessorKey: "cylinder_sub_barcode" },
+    { header: "R K Serial No", accessorKey: "cylinder_sub_barcode" },
     { header: "Cylinder No", accessorKey: "cylinder_sub_company_no" },
     { header: "Manufacturer", accessorKey: "manufacturer_name" },
     {
@@ -112,11 +112,7 @@ const CylinderSubList = ({ cylinderId, onBack }) => {
   return (
     <>
       <div className="flex items-center justify-between mb-6">
-        <div className="flex items-center gap-4">
-          <Button variant="ghost" onClick={onBack}>
-            <ArrowLeft className="h-4 w-4 mr-2" />
-            Back to Batches
-          </Button>
+        <div className="flex items-center px-3">
           <h3 className="text-xl font-bold border-b-2 border-dashed border-blue-900">View Cylinder</h3>
         </div>
         {batchData && (
