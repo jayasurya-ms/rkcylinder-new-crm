@@ -30,7 +30,7 @@ export const CYLINDER_API = {
   create: "web-create-cylinder",
   createSub: "web-create-cylinder-sub",
   updateSub: (id) => `web-update-cylinder-new/${id}`,
-  byId: (id) => `web-fetch-cylinder-by-id-new/${id}`,
+  byId: (id) => `web-fetch-cylinder-by-id/${id}`,
   subById: (id) => `web-fetch-cylinder-by-id-new/${id}`,
   detailsByBarcode: (barcode) => `web-fetch-cylinder-by-scan/${barcode}`,
 };
