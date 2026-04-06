@@ -76,7 +76,12 @@ const CylinderSubForm = ({ isOpen, onClose, subId, cylinderId }) => {
         });
 
         console.log("Cylinder Sub Detail Response:", res);
-        const subData = res?.cylinderSub || res?.cylindersub || res?.data?.cylinderSub || res?.data?.cylindersub || res?.data;
+        const subData =
+          res?.cylinderSub ||
+          res?.cylindersub ||
+          res?.data?.cylinderSub ||
+          res?.data?.cylindersub ||
+          res?.data;
         if (subData) {
           setData({
             ...subData,
@@ -160,7 +165,7 @@ const CylinderSubForm = ({ isOpen, onClose, subId, cylinderId }) => {
       <DialogContent className="max-w-2xl overflow-y-auto max-h-[90vh]">
         <DialogHeader>
           <DialogTitle>
-            {isEditMode ? "Edit Cylinder Serial No" : "Add Cylinder Serial No"}
+            {isEditMode ? "Edit Cylinder" : "Add Cylinder"}
           </DialogTitle>
         </DialogHeader>
 
