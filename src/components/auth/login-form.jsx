@@ -24,7 +24,7 @@ export default function LoginForm({
     >
       <div className="flex items-center gap-1 p-2 rounded-md mb-8">
         <img
-          src="public/rkcyllogo.png"
+          src="/rkcyllogo.png"
           alt="RK Cylinder Logo"
           className="h-12 md:h-16"
         />
