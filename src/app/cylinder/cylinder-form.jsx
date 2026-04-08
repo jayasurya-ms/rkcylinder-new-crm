@@ -73,11 +73,8 @@ const CylinderForm = ({ isOpen, onClose }) => {
 
   const validate = () => {
     const newErrors = {};
-    if (!data.cylinder_year) newErrors.cylinder_year = "Required";
     if (!data.cylinder_date) newErrors.cylinder_date = "Required";
     if (!data.cylinder_vendor_id) newErrors.cylinder_vendor_id = "Required";
-    if (!data.cylinder_count || isNaN(data.cylinder_count))
-      newErrors.cylinder_count = "Invalid count";
     if (!data.cylinder_batch_nos) newErrors.cylinder_batch_nos = "Required";
 
     setErrors(newErrors);

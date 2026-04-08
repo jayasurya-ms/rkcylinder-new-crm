@@ -22,10 +22,11 @@ export default function LoginForm({
       transition={{ duration: 0.6, delay: 0.2 }}
       className="lg:col-span-2 p-8 md:p-12 flex flex-col justify-center bg-white to-transparent"
     >
-      <div className="flex items-center gap-1 p-2 rounded-md mb-8 ">
+      <div className="flex items-center gap-1 p-2 rounded-md mb-8">
         <img
-          // src="https://aia.in.net/crm/public/assets/images/logo/new_retina_logos.webp"
-          alt="Chair Logo"
+          src="public/rkcyllogo.png"
+          alt="RK Cylinder Logo"
+          className="h-12 md:h-16"
         />
       </div>
 
@@ -37,7 +38,6 @@ export default function LoginForm({
         <h1 className="text-4xl md:text-5xl font-bold text-dark mb-2">
           Welcome back
         </h1>
-        <p className="text-dark/20 text-lg mb-10">Comfort Meets Design</p>
       </motion.div>
       <form onSubmit={handleSubmit}>
         <div className="space-y-5">
@@ -118,20 +118,6 @@ export default function LoginForm({
               </>
             )}
           </Button>
-          <motion.p
-            initial={{ opacity: 0 }}
-            animate={{ opacity: 1 }}
-            transition={{ delay: 0.95 }}
-            className="text-center text-sm text-dark/60 mt-6"
-          >
-            Don't have an account?{" "}
-            <Link
-              to="/signup"
-              className="text-primary font-semibold hover:underline transition-colors"
-            >
-              Sign Up
-            </Link>
-          </motion.p>
         </div>
       </form>
     </motion.div>

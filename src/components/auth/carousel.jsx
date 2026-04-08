@@ -33,7 +33,6 @@ export default function Carousel({
         className="mb-6"
       >
         <h2 className="text-3xl font-bold text-white">{current.title}</h2>
-        <p className="text-blue-200 text-sm mt-2">{current.description}</p>
       </motion.div>
 
       <CarouselContainer

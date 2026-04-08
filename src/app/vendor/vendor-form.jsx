@@ -69,11 +69,16 @@ const VendorForm = ({ isOpen, onClose, vendorId }) => {
 
   const validate = () => {
     const newErrors = {};
-    if (!data.vendor_name.trim()) newErrors.vendor_name = "Required";
-    if (!data.vendor_mobile.trim()) newErrors.vendor_mobile = "Required";
-    if (!data.vendor_email.trim()) newErrors.vendor_email = "Required";
-    if (!data.vendor_state.trim()) newErrors.vendor_state = "Required";
-    if (!data.vendor_address.trim()) newErrors.vendor_address = "Required";
+
+    if (!data.vendor_name.trim()) {
+      newErrors.vendor_name = "Required";
+    }
+
+    const email = data.vendor_email?.trim();
+
+    if (email && !/^[^\s@]+@gmail\.com$/i.test(email)) {
+      newErrors.vendor_email = "Enter a valid Gmail address";
+    }
 
     setErrors(newErrors);
     return Object.keys(newErrors).length === 0;
@@ -145,9 +150,6 @@ const VendorForm = ({ isOpen, onClose, vendorId }) => {
                   setData({ ...data, vendor_mobile: e.target.value })
                 }
               />
-              {errors.vendor_mobile && (
-                <p className="text-xs text-red-500">{errors.vendor_mobile}</p>
-              )}
             </div>
             <div className="space-y-2">
               <label className="text-sm font-medium">Email</label>
@@ -174,9 +176,6 @@ const VendorForm = ({ isOpen, onClose, vendorId }) => {
                 setData({ ...data, vendor_state: e.target.value })
               }
             />
-            {errors.vendor_state && (
-              <p className="text-xs text-red-500">{errors.vendor_state}</p>
-            )}
           </div>
 
           <div className="space-y-2">
@@ -188,14 +187,11 @@ const VendorForm = ({ isOpen, onClose, vendorId }) => {
                 setData({ ...data, vendor_address: e.target.value })
               }
             />
-            {errors.vendor_address && (
-              <p className="text-xs text-red-500">{errors.vendor_address}</p>
-            )}
           </div>
 
           {isEditMode && (
             <div className="space-y-2">
-              <label className="text-sm font-medium">Status</label>
+              <label className="text-sm font-medium">Status </label>
               <GroupButton
                 className="w-fit"
                 value={data.vendor_status}

@@ -25,9 +25,9 @@ export default function CarouselContainer({
               animate={{
                 x: isCenter ? 0 : isLeft ? -380 : 380,
                 z: isCenter ? 0 : -300,
-                opacity: isCenter ? 1 : 0.35,
-                scale: isCenter ? 1 : 0.75,
-                rotateY: isCenter ? 0 : isLeft ? 30 : -30,
+                opacity: isCenter ? 1 : 0.5,
+                scale: isCenter ? 1 : 0.8,
+                rotateY: isCenter ? 0 : isLeft ? 25 : -25,
               }}
               transition={{
                 type: "spring",
@@ -36,7 +36,7 @@ export default function CarouselContainer({
               }}
               className="
                 absolute w-80 h-96 rounded-2xl overflow-hidden
-                shadow-xl shadow-primary/20 cursor-pointer
+                shadow-xl shadow-primary/20 cursor-none pointer-events-none
               "
               style={{ transformStyle: "preserve-3d" }}
               onClick={() => {
@@ -52,7 +52,7 @@ export default function CarouselContainer({
                 transition={{ duration: 0.5 }}
               />
 
-              <div className="absolute inset-0 bg-gradient-to-t from-black/70 via-black/20 to-transparent" />
+              <div className="absolute inset-0" />
             </motion.div>
           );
         })}

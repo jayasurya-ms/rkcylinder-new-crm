@@ -71,16 +71,16 @@ const ManufacturerForm = ({ isOpen, onClose, manufacturerId }) => {
 
   const validate = () => {
     const newErrors = {};
-    if (!data.manufacturer_name.trim())
+
+    if (!data.manufacturer_name.trim()) {
       newErrors.manufacturer_name = "Required";
-    if (!data.manufacturer_mobile.trim())
-      newErrors.manufacturer_mobile = "Required";
-    if (!data.manufacturer_email.trim())
-      newErrors.manufacturer_email = "Required";
-    if (!data.manufacturer_state.trim())
-      newErrors.manufacturer_state = "Required";
-    if (!data.manufacturer_address.trim())
-      newErrors.manufacturer_address = "Required";
+    }
+
+    const email = data.manufacturer_email?.trim();
+
+    if (email && !/^[^\s@]+@gmail\.com$/i.test(email)) {
+      newErrors.manufacturer_email = "Enter a valid Gmail address";
+    }
 
     setErrors(newErrors);
     return Object.keys(newErrors).length === 0;
@@ -154,11 +154,6 @@ const ManufacturerForm = ({ isOpen, onClose, manufacturerId }) => {
                   setData({ ...data, manufacturer_mobile: e.target.value })
                 }
               />
-              {errors.manufacturer_mobile && (
-                <p className="text-xs text-red-500">
-                  {errors.manufacturer_mobile}
-                </p>
-              )}
             </div>
             <div className="space-y-2">
               <label className="text-sm font-medium">Email</label>
@@ -187,11 +182,6 @@ const ManufacturerForm = ({ isOpen, onClose, manufacturerId }) => {
                 setData({ ...data, manufacturer_state: e.target.value })
               }
             />
-            {errors.manufacturer_state && (
-              <p className="text-xs text-red-500">
-                {errors.manufacturer_state}
-              </p>
-            )}
           </div>
 
           <div className="space-y-2">
@@ -203,11 +193,6 @@ const ManufacturerForm = ({ isOpen, onClose, manufacturerId }) => {
                 setData({ ...data, manufacturer_address: e.target.value })
               }
             />
-            {errors.manufacturer_address && (
-              <p className="text-xs text-red-500">
-                {errors.manufacturer_address}
-              </p>
-            )}
           </div>
 
           {isEditMode && (
