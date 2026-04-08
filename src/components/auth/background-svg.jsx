@@ -9,13 +9,19 @@ export default function BackgroundSVG() {
     >
       <defs>
         <linearGradient id="grad1" x1="0%" y1="0%" x2="100%" y2="100%">
-          <stop offset="0%" stopColor="#3b82f6" stopOpacity="0.4" />
-          <stop offset="100%" stopColor="#8b5cf6" stopOpacity="0.2" />
+          <stop offset="0%" stopColor="hsl(var(--primary))" stopOpacity="0.4" />
+          <stop offset="100%" stopColor="hsl(var(--ring))" stopOpacity="0.2" />
         </linearGradient>
+
         <linearGradient id="grad2" x1="0%" y1="0%" x2="100%" y2="0%">
-          <stop offset="0%" stopColor="#0ea5e9" stopOpacity="0.3" />
-          <stop offset="100%" stopColor="#a855f7" stopOpacity="0.1" />
+          <stop offset="0%" stopColor="hsl(var(--color))" stopOpacity="0.3" />
+          <stop
+            offset="100%"
+            stopColor="hsl(var(--primary))"
+            stopOpacity="0.1"
+          />
         </linearGradient>
+
         <filter id="glow">
           <feGaussianBlur stdDeviation="3" result="coloredBlur" />
           <feMerge>
@@ -30,7 +36,7 @@ export default function BackgroundSVG() {
         cy="150"
         r={120}
         fill="none"
-        stroke="url(#grad1)"
+        stroke="hsl(var(--border))"
         strokeWidth="2"
         filter="url(#glow)"
         initial={{ r: 120, opacity: 0.6 }}
@@ -45,7 +51,7 @@ export default function BackgroundSVG() {
         cy="200"
         r={180}
         fill="none"
-        stroke="url(#grad2)"
+        stroke="hsl(var(--border))"
         strokeWidth="2"
         filter="url(#glow)"
         initial={{ r: 180, opacity: 0.4 }}
@@ -65,7 +71,7 @@ export default function BackgroundSVG() {
         cy="850"
         r={100}
         fill="none"
-        stroke="url(#grad1)"
+        stroke="hsl(var(--border))"
         strokeWidth="2"
         filter="url(#glow)"
         initial={{ r: 100, opacity: 0.5 }}
@@ -85,7 +91,7 @@ export default function BackgroundSVG() {
         cy="800"
         r={130}
         fill="none"
-        stroke="url(#grad2)"
+        stroke="hsl(var(--border))"
         strokeWidth="2"
         filter="url(#glow)"
         initial={{ r: 130, opacity: 0.5 }}
@@ -103,7 +109,7 @@ export default function BackgroundSVG() {
 
       <motion.path
         d="M 0 300 Q 250 250 500 300 T 1000 300"
-        stroke="url(#grad1)"
+        stroke="hsl(var(--border))"
         strokeWidth="1.5"
         fill="none"
         animate={{
@@ -113,7 +119,7 @@ export default function BackgroundSVG() {
       />
       <motion.path
         d="M 0 700 Q 250 650 500 700 T 1000 700"
-        stroke="url(#grad2)"
+        stroke="hsl(var(--border))"
         strokeWidth="1.5"
         fill="none"
         animate={{
@@ -123,16 +129,11 @@ export default function BackgroundSVG() {
       />
 
       <defs>
-        <pattern
-          id="grid"
-          width="80"
-          height="80"
-          patternUnits="userSpaceOnUse"
-        >
+        <pattern id="grid" width="80" height="80" patternUnits="userSpaceOnUse">
           <path
             d="M 80 0 L 0 0 0 80"
             fill="none"
-            stroke="#3b82f6"
+            stroke="hsl(var(--border))"
             strokeWidth="0.5"
             opacity="0.08"
           />
@@ -142,7 +143,7 @@ export default function BackgroundSVG() {
 
       <motion.path
         d="M -100 400 Q 0 350 100 400 T 300 400 T 500 400 T 700 400 T 900 400 T 1100 400"
-        stroke="url(#grad2)"
+        stroke="hsl(var(--border))"
         strokeWidth="1"
         fill="none"
         animate={{

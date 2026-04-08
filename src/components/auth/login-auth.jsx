@@ -11,27 +11,19 @@ import { getDashboardPath } from "@/utils/navigation";
 import BackgroundSVG from "./background-svg";
 import Carousel from "./carousel";
 import LoginForm from "./login-form";
+import { toast } from "sonner";
 const testimonials = [
   {
-    image:
-      "https://images.unsplash.com/photo-1582582621959-48d27397dc69?ixlib=rb-4.0.3&auto=format&fit=crop&w=1000&q=80",
-    title: "Comfort Meets Design",
-    description:
-      "Ergonomically designed chairs that provide comfort and support for everyday use.",
+    image: "/logo1.png",
+    title: "Safe Fuel For Every Kitchen",
   },
   {
-    image:
-      "https://images.unsplash.com/photo-1616628182501-9f5b3cda2d32?ixlib=rb-4.0.3&auto=format&fit=crop&w=1000&q=80",
-    title: "Crafted for Every Space",
-    description:
-      "Stylish chairs that blend seamlessly into homes, offices, and modern interiors.",
+    image: "/logo3.png",
+    title: "Delivering Safety, Delivering Trust",
   },
   {
-    image:
-      "https://images.unsplash.com/photo-1600585154340-be6161a56a0c?ixlib=rb-4.0.3&auto=format&fit=crop&w=1000&q=80",
-    title: "Quality You Can Trust",
-    description:
-      "Durable materials and thoughtful craftsmanship built to last for years.",
+    image: "/logo2.png",
+    title: "Your Family's Energy Partner",
   },
 ];
 
@@ -136,7 +128,7 @@ export default function AuthUI() {
           setCredentials({
             token: token,
             user: user,
-            // (Assuming other fields come from res top level if available, 
+            // (Assuming other fields come from res top level if available,
             // but prioritize legacy snippet fields)
           }),
         );
@@ -155,12 +147,21 @@ export default function AuthUI() {
         toast.error("Login Failed: Unexpected response structure.");
       }
     } catch (error) {
-      toast.error(error.response?.data?.message || "An error occurred during login.");
+      toast.error(
+        error.response?.data?.error || "An error occurred during login.",
+      );
     }
   };
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-green-950 via-green-950 to-slate-900 flex items-center justify-center p-4 overflow-hidden relative">
+    <div
+      className="min-h-screen bg-gradient-to-br 
+  from-[hsl(var(--sidebar-background))] 
+  via-[hsl(var(--sidebar-background))] 
+  to-[hsl(var(--sidebar-accent))] 
+  flex items-center justify-center p-4 overflow-hidden relative"
+    >
+      {" "}
       <BackgroundSVG />
       <motion.div
         initial={{ opacity: 0, scale: 0.95 }}

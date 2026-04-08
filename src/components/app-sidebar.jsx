@@ -95,12 +95,12 @@ const useNavigationData = (userType) => {
 };
 
 const Logo = ({ className }) => (
-  <img src="/chair-fevicon.png" alt="Logo" className={className} />
+  <img src="/fevicon.png" alt="Logo" className={className} />
 );
 
 const TEAMS_CONFIG = [
   {
-    name: "Chair Management",
+    name: "Rk Cylinder",
     logo: Logo,
     plan: "",
   },
